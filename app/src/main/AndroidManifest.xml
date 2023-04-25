@@ -12,9 +12,14 @@
         android:theme="@style/Theme.UberCloneRider"
         tools:targetApi="31">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.UberCloneRider.NoActionBar" />
+        <activity
             android:name=".SplashScreen"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
