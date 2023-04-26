@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.uberclonerider.Common.Common
 import com.example.uberclonerider.Model.RiderModel
+import com.example.uberclonerider.Utils.UserUtils
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -79,6 +80,18 @@ class SplashScreen : AppCompatActivity() {
 
             val user = myFirebaseAuth.currentUser
             if (user != null) {
+                val firebaseInstallations = FirebaseInstallations.getInstance()
+                firebaseInstallations.getToken(/*forceRefresh=*/false)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result.token
+                            Log.d("TOKEN", token)
+                            UserUtils.updateToken(this@SplashScreen, token)
+                        } else {
+                            val exception = task.exception
+                            Toast.makeText(this@SplashScreen, exception?.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
                 checkUserFromFirebase()
             } else {
                 showLoginLayout()
@@ -211,9 +224,5 @@ class SplashScreen : AppCompatActivity() {
         startActivity(Intent(this,HomeActivity::class.java))
         finish()
     }
+
 }
-
-
-
-
-
