@@ -10,11 +10,17 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.uberclonerider.Model.DriverGeoModel
 import com.example.uberclonerider.Model.RiderModel
 import com.example.uberclonerider.R
+import com.google.android.gms.maps.model.Marker
 
 object Common {
 
+    val markerList: MutableMap<String, Marker> = HashMap()
+    val DRIVERS_INFO_REFERENCE:String = "DriverInfo"
+    val driversFound: MutableSet<DriverGeoModel> = HashSet()
+    val DRIVERS_LOCATION_REFERENCES: String = "DriversLocation" //Same as Server app
     val TOKEN_REFERENCE: String = "Token"
     val RIDER_INFO_REFERENCE: String="Riders"
     var currentRider: RiderModel? = null
@@ -61,5 +67,9 @@ object Common {
             val notification = builder.build()
             notificationManager.notify(id,notification)
         }
+    }
+
+    fun buildName(firstName: String?, lastName: String?): String? {
+        return java.lang.StringBuilder(firstName!!).append(" ").append(lastName).toString()
     }
 }
